@@ -1,4 +1,4 @@
-OS X Auditor 
+Twoblivion
 Copyright (C) 2013 Jean-Philippe Teissier
 
 This program is free software: you can redistribute it and/or modify
