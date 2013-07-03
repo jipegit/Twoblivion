@@ -16,8 +16,8 @@ Copy all files from Github
 
 ## How to run
 
-1) Create an application and set TWOBLIVION_CONSUMER_KEY and TWOBLIVION_CONSUMER_SECRET in the source code. See https://dev.twitter.com/ 
-2) Obtain a R/W access token for your account. See https://dev.twitter.com/docs/auth/obtaining-access-tokens
+1. Create an application and set TWOBLIVION_CONSUMER_KEY and TWOBLIVION_CONSUMER_SECRET in the source code. See https://dev.twitter.com/ 
+2/ Obtain a R/W access token for your account. See https://dev.twitter.com/docs/auth/obtaining-access-tokens
 
 YOUR_ACCESS_TOKEN_SECRET and YOUR_ACCESS_TOKEN can be set in the source code itself or passed as arguments with -k and -s
 
