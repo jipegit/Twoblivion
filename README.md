@@ -14,16 +14,37 @@ Copy all files from Github
 
 * pip install python-twitter
 
+python-twitter is not compatible with Python3 yet
+
+## Setup
+
+1. Create an application. See https://dev.twitter.com/ 
+
+2. Go to your application's settings -> OAuth settings and copy/paste your "Consumer key" and your "Consumer key" to the YOUR_APP_CONSUMER_KEY and YOUR_APP_CONSUMER_SECRET variables in the source code
+
+3. Go to your application's settings -> Application Type, and change the Access parameter to "Read, Write and Access direct messages". Update the settings
+
+3. Go back to your application's details and click on "Recreate my access token". Copy/paste your "Access token" and your "Access token secret" to the YOUR_ACCESS_TOKEN_SECRET and YOUR_ACCESS_TOKEN in the source code. Alternatively you can pass them as arguments with -k/--accesstokenkey and -s/accesstokensecret
+
+4. Get your twitter ID from your username. https://www.google.fr/search?q=get+twitter+id+from+username
+
+5. (optional) Set the TEST_DATE variable to whatever you want (or use the option -d/--date). Set the YOUR_USER_ID variable to your user_id. (or use the option -u/--userid)
+
+
 ## How to run
 
-1. Create an application and set TWOBLIVION_CONSUMER_KEY and TWOBLIVION_CONSUMER_SECRET in the source code. See https://dev.twitter.com/ 
-2. Obtain a R/W access token for your account. See https://dev.twitter.com/docs/auth/obtaining-access-tokens
+python2.7 twoblivion.py -h
 
-YOUR_ACCESS_TOKEN_SECRET and YOUR_ACCESS_TOKEN can be set in the source code itself or passed as arguments with -k and -s
-
-python twoblivion.py -h
+eg. twoblivion.py -m -d "2013-09-01"
 
 ## Changelog
+
+### 0.2
+ * Converted to Python3
+ * Options added to only delete Tweets or DM
+ * Error handling has been improved
+ * Some functions have been renamed
+ * Readme update
 
 ### 0.1
  * Initial alpha release
