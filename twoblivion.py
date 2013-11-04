@@ -6,10 +6,11 @@
 #    
 #  This work is licensed under the GNU General Public License
 #
-#  version 0.2
+__version__ = "0.3"
 
 import optparse
 import os
+import sys
 import twitter
 from dateutil.parser import *
 from dateutil.relativedelta import *
@@ -26,103 +27,71 @@ TEST_DATE = "2012 01 01"
 
 Debug = False
 
-def DeleteTweets(TwApi, TweetsToDelete):
-	""" Delete the tweets """
+def DeleteItems(TwApi, ItemsToDelete, ItemType):
+	""" Delete a bunch of Tweets or DMs """
 
-	for Tweet in TweetsToDelete:
-		if Debug: print("[D] TweetID " + str(Tweet) + " deleted")
+	for Item in ItemsToDelete:
+		print("[*] Deleting your old " + ItemType + "s")
 		try:
-			TwApi.DestroyStatus(Tweet)	
-		except twitter.TwitterError as e:
-			print(u"[–] ERROR: (" + str(e[0][0]['code']) + u") " + e[0][0]['message'].decode('utf-8'))
-			pass
-
-def DeleteDM(TwApi, DMToDelete):
-	""" Delete the DMs """
-
-	for DM in DMToDelete:
-		if Debug: print("[D] Direct MessageID " + str(DM) + " deleted")
-		try:
-			TwApi.DestroyDirectMessage(DM)	
+			if ItemType == "Tweet":
+				TwApi.DestroyStatus(Item)	
+			elif ItemType == "Direct Message":
+				TwApi.DestroyDirectMessage(Item)
+			if Debug: 
+				print("[D] " + ItemType + " ID " + str(Item) + " deleted")
+			else:
+				sys.stdout.write('.')
+				sys.stdout.flush()
 		except twitter.TwitterError as e:
 			print(u"[-] ERROR: (" + str(e[0][0]['code'])+ u") " + e[0][0]['message'].decode('utf-8'))
 			pass
+	print("")
 
-def GetDirectMessagesToDelete(TwApi, Date):
-	""" Get the list of DM to delete"""
+def GetItemsToDelete(TwApi, UserId, Date, ItemType):
+	""" Get the list of Tweets or Direct Messages to delete"""
+	
+	TotalItems = 0
+	ItemsToDelete = []
+	Items = None
 
-	TotalDirectMessages = 0
-	DirectMessagesToDelete = []
-
-	print("[*] Retrieving the list of DM to delete (it might take a while...)")
+	print("[*] Retrieving the list of " + ItemType + "s to delete (it might take a while...)")
 
 	try:
-		DirectMessages = TwApi.GetDirectMessages(count=200)									#Can't request more than 200 DM
-	except twitter.TwitterError as e:
-		print(u"[-] ERROR: (" + str(e[0][0]['code']) + u") " + e[0][0]['message'].decode('utf-8'))
-		exit(-1)
-
-	while len(DirectMessages) > 1:
-		TotalDirectMessages += len(DirectMessages)
-		if Debug: print("[D] Got " + str(TotalDirectMessages) + " Direct Messages")
-		MaxId = DirectMessages[-1].id
-		for DM in DirectMessages:
-			Delta = str(parse(DM.created_at, ignoretz=True) - parse(Date))
-			if Debug: print("[D] ID: " + str(DM.id) + " - Date: " + DM.created_at + " R: " + Delta)
-			if Delta[0] == "-":
-				DirectMessagesToDelete.append(DM.id)
-				if Debug: print("[D] " + str(DM.id) + " (" + DM.created_at + ") will be deleted")
-		try:
-			DirectMessages = TwApi.GetDirectMessages(count=200, max_id=MaxId)
-		except twitter.TwitterError as e:
-			print(u"[-] ERROR: (" + str(e[0][0]['code'])+ u") " + e[0][0]['message'].decode('utf-8'))
-			exit(-1)
-
-	print("[*] Got " + str(len(DirectMessagesToDelete)) + " DM to delete")
-
-	return DirectMessagesToDelete
-
-
-def GetTweetsToDelete(TwApi, UserId, Date):
-	""" Get the list of tweets to delete"""
-	
-	TotalTweets = 0
-	StatusesToDelete = []
-	
-	print("[*] Retrieving the list of tweets to delete (it might take a while...)")
-
-	try:
-		Statuses = TwApi.GetUserTimeline(user_id=UserId, count=200)						#Can't request more than 200 tweets
+		if ItemType == "Tweet":
+			Items = TwApi.GetUserTimeline(user_id=UserId, count=200)										#Can't request more than 200 Items at a time
+		elif ItemType == "Direct Message":
+			Items = TwApi.GetDirectMessages(count=200)
 	except twitter.TwitterError as e:
 		print(u"[—] ERROR: (" + str(e[0][0]['code']) + u") " + e[0][0]['message'].decode('utf-8'))
 		exit(-1)
 		
-	while len(Statuses) > 1:
-		TotalTweets += len(Statuses)
-		if Debug: print("[D] Got " + str(TotalTweets) + " tweets")
-		MaxId = Statuses[-1].id
-		for S in Statuses:
-			Delta = str(parse(S.created_at, ignoretz=True) - parse(Date))
-			if Debug: print("[D] ID: " + str(S.id) + " - Date: " + S.created_at + " R: " + Delta)
+	while len(Items) > 1:
+		TotalItems += len(Items)
+		if Debug: print("[D] Got " + str(TotalItems) + " " + ItemType)
+		MaxId = Items[-1].id
+		for Item in Items:
+			Delta = str(parse(Item.created_at, ignoretz=True) - parse(Date))
+			if Debug: print("[D] ID: " + str(Item.id) + " - Date: " + Item.created_at + " R: " + Delta)
 			if Delta[0] == "-":
-				StatusesToDelete.append(S.id)
-				if Debug: print("[D] " + str(S.id) + " (" + S.created_at + ") will be deleted")
+				ItemsToDelete.append(Item.id)
+				if Debug: print("[D] " + str(Item.id) + " (" + Item.created_at + ") will be deleted")
 		try:
-			Statuses = TwApi.GetUserTimeline(user_id=UserId, count=200, max_id=MaxId)
+			if ItemType == "Tweet":
+				Items = TwApi.GetUserTimeline(user_id=UserId, count=200, max_id=MaxId)						#Can't request more than 200 Items at a time
+			elif ItemType == "Direct Message":
+				Items = TwApi.GetDirectMessages(count=200, max_id=MaxId)
 		except twitter.TwitterError as e:
-			print(u"[-]ERROR: (" + str(e[0][0]['code']) + u") " + e[0][0]['message'].decode('utf-8'))
+			print(u"[-] ERROR: (" + str(e[0][0]['code']) + u") " + e[0][0]['message'].decode('utf-8'))
 			exit(-1)
 	
-	print("[*] Got " + str(len(StatusesToDelete)) + " tweets to delete")
+	print("[*] Got " + str(len(ItemsToDelete)) + " " + ItemType + " to delete")
 	
-	return StatusesToDelete
-	
+	return ItemsToDelete
+
 def main():
 	""" Here we go """
 	
 	global Debug
-	TweetsToDelete = []
-	DirectMessagesToDelete = []
 	Tweets = True
 	DM = True
 
@@ -168,20 +137,24 @@ def main():
 	else:
 		Date = TEST_DATE
 
+	if AcsTokenKey == "" or AcsTokenSecret == "" or UserId == "" or Date == "":
+		print("[-] ERROR: A mandatory parameter is missing")
+		exit(1)
+
+	print("Twoblivion v" + __version__)
+
 	TwApi = twitter.Api(consumer_key=YOUR_APP_CONSUMER_KEY,
 						consumer_secret=YOUR_APP_CONSUMER_SECRET,
 						access_token_key=AcsTokenKey,
 	 					access_token_secret=AcsTokenSecret)
 	
-	print("[*] Screen Name:" + TwApi.GetUser(UserId).GetScreenName() + " #tweets: " + str(TwApi.GetUser(UserId).statuses_count))
+	print("[*] Screen Name: " + TwApi.GetUser(UserId).GetScreenName() + " - Number of tweets: " + str(TwApi.GetUser(UserId).statuses_count))
 	
 	if Tweets:
-		TweetsToDelete = GetTweetsToDelete(TwApi, UserId, Date)
-		DeleteTweets(TwApi, TweetsToDelete)
+		DeleteItems(TwApi, GetItemsToDelete(TwApi, UserId, Date, "Tweet"), "Tweet")
 	
 	if DM:
-		DirectMessagesToDelete = GetDirectMessagesToDelete(TwApi, Date)
-		DeleteDM(TwApi, DirectMessagesToDelete)
+		DeleteItems(TwApi, GetItemsToDelete(TwApi, UserId, Date, "Direct Message"), "Direct Message")
 	
 if __name__ == '__main__':
 	main()

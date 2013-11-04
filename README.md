@@ -39,6 +39,10 @@ eg. twoblivion.py -m -d "2013-09-01"
 
 ## Changelog
 
+### 0.3
+ * Massive code refactoring
+ * Additional checks on the mandatory parameters
+
 ### 0.2
  * Converted to Python3
  * Options added to only delete Tweets or DM
