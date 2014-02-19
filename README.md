@@ -1,6 +1,6 @@
 # Twoblivion
 
-Twoblivion is a free tool to automatically delete your old tweets
+Twoblivion is a free tool to automatically delete your old tweets and direct messages
 
 ## Author 
 
@@ -13,6 +13,7 @@ Copy all files from Github
 ## Dependencies
 
 * pip install python-twitter
+* pip install python-dateutil
 
 python-twitter is not compatible with Python3 yet
 
@@ -38,6 +39,9 @@ python2.7 twoblivion.py -h
 eg. twoblivion.py -m -d "2013-09-01"
 
 ## Changelog
+
+### 0.4
+ * FIX: date comparison function
 
 ### 0.3
  * Massive code refactoring
