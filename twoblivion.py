@@ -6,7 +6,7 @@
 #    
 #  This work is licensed under the GNU General Public License
 #
-__version__ = "0.3"
+__version__ = "0.4"
 
 import optparse
 import os
@@ -23,25 +23,29 @@ YOUR_ACCESS_TOKEN = ""
 YOUR_ACCESS_TOKEN_SECRET = ""
 
 YOUR_USER_ID = ""
-TEST_DATE = "2012 01 01"
+TEST_DATE = "2013 02 01"
 
 Debug = False
 
 def DeleteItems(TwApi, ItemsToDelete, ItemType):
 	""" Delete a bunch of Tweets or DMs """
 
+	TotalItems = len(ItemsToDelete)
+	i = 1
+
+	print("[*] Deleting your old " + ItemType + "s")
 	for Item in ItemsToDelete:
-		print("[*] Deleting your old " + ItemType + "s")
 		try:
 			if ItemType == "Tweet":
 				TwApi.DestroyStatus(Item)	
 			elif ItemType == "Direct Message":
 				TwApi.DestroyDirectMessage(Item)
 			if Debug: 
-				print("[D] " + ItemType + " ID " + str(Item) + " deleted")
+				print("[D] [" + str(i) + "/" + str(TotalItems) + "] " + ItemType + " ID " + str(Item) + " has been deleted")
 			else:
 				sys.stdout.write('.')
 				sys.stdout.flush()
+			i += 1
 		except twitter.TwitterError as e:
 			print(u"[-] ERROR: (" + str(e[0][0]['code'])+ u") " + e[0][0]['message'].decode('utf-8'))
 			pass
@@ -70,9 +74,7 @@ def GetItemsToDelete(TwApi, UserId, Date, ItemType):
 		if Debug: print("[D] Got " + str(TotalItems) + " " + ItemType)
 		MaxId = Items[-1].id
 		for Item in Items:
-			Delta = str(parse(Item.created_at, ignoretz=True) - parse(Date))
-			if Debug: print("[D] ID: " + str(Item.id) + " - Date: " + Item.created_at + " R: " + Delta)
-			if Delta[0] == "-":
+			if parse(Item.created_at, ignoretz=True).date() < parse(Date).date():
 				ItemsToDelete.append(Item.id)
 				if Debug: print("[D] " + str(Item.id) + " (" + Item.created_at + ") will be deleted")
 		try:
@@ -149,7 +151,7 @@ def main():
 	 					access_token_secret=AcsTokenSecret)
 	
 	print("[*] Screen Name: " + TwApi.GetUser(UserId).GetScreenName() + " - Number of tweets: " + str(TwApi.GetUser(UserId).statuses_count))
-	
+
 	if Tweets:
 		DeleteItems(TwApi, GetItemsToDelete(TwApi, UserId, Date, "Tweet"), "Tweet")
 	
