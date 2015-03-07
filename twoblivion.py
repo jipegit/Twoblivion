@@ -6,7 +6,7 @@
 #    
 #  This work is licensed under the GNU General Public License
 #
-__version__ = "0.4"
+__version__ = "0.4.1"
 
 import optparse
 import os
@@ -23,7 +23,7 @@ YOUR_ACCESS_TOKEN = ""
 YOUR_ACCESS_TOKEN_SECRET = ""
 
 YOUR_USER_ID = ""
-TEST_DATE = "2013 02 01"
+TEST_DATE = "2015 01 01"
 
 Debug = False
 
@@ -65,6 +65,7 @@ def GetItemsToDelete(TwApi, UserId, Date, ItemType):
 			Items = TwApi.GetUserTimeline(user_id=UserId, count=200)										#Can't request more than 200 Items at a time
 		elif ItemType == "Direct Message":
 			Items = TwApi.GetDirectMessages(count=200)
+			Items = Items + TwApi.GetSentDirectMessages(count=200)
 	except twitter.TwitterError as e:
 		print(u"[—] ERROR: (" + str(e[0][0]['code']) + u") " + e[0][0]['message'].decode('utf-8'))
 		exit(-1)
