@@ -34,11 +34,14 @@ python-twitter is not compatible with Python3 yet
 
 ## How to run
 
-python2.7 twoblivion.py -h
+python twoblivion.py -h
 
-eg. twoblivion.py -m -d "2013-09-01"
+eg. python twoblivion.py -m -d "2013-09-01"
 
 ## Changelog
+
+### 0.4.1
+ * FIX: DM sent were not deleted.
 
 ### 0.4
  * FIX: date comparison function
@@ -60,7 +63,7 @@ eg. twoblivion.py -m -d "2013-09-01"
 ## License
 
 Twoblivion
-Copyright (C) 2013 Jean-Philippe Teissier
+Copyright (C) 2015 Jean-Philippe Teissier
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
