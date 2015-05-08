@@ -8,7 +8,7 @@ Jean-Philippe Teissier - @Jipe_
 
 ## How to install
 
-Copy all files from Github
+Clone the repo from Github
 
 ## Dependencies
 
@@ -21,11 +21,12 @@ python-twitter is not compatible with Python3 yet
 
 1. Create an application. See https://dev.twitter.com/ 
 
-2. Go to your application's settings -> OAuth settings and copy/paste your "Consumer key" and your "Consumer key" to the YOUR_APP_CONSUMER_KEY and YOUR_APP_CONSUMER_SECRET variables in the source code
+2. Go to your application's settings -> Keys and Access Tokens and copy/paste your "Consumer key" and your "Consumer secret" to the YOUR_APP_CONSUMER_KEY and YOUR_APP_CONSUMER_SECRET variables in the source code
 
 3. Go to your application's settings -> Application Type, and change the Access parameter to "Read, Write and Access direct messages". Update the settings
 
-3. Go back to your application's details and click on "Recreate my access token". Copy/paste your "Access token" and your "Access token secret" to the YOUR_ACCESS_TOKEN_SECRET and YOUR_ACCESS_TOKEN in the source code. Alternatively you can pass them as arguments with -k/--accesstokenkey and -s/accesstokensecret
+3. Go back to your application's details and click on "Recreate my access token".
+Copy/paste your "Access token" and your "Access token secret" to the YOUR_ACCESS_TOKEN and YOUR_ACCESS_TOKEN_SECRET in the source code. Alternatively you can pass them as arguments with -k/--accesstokenkey and -s/accesstokensecret
 
 4. Get your twitter ID from your username. https://www.google.fr/search?q=get+twitter+id+from+username
 
@@ -36,7 +37,7 @@ python-twitter is not compatible with Python3 yet
 
 python twoblivion.py -h
 
-eg. python twoblivion.py -m -d "2013-09-01"
+eg. python twoblivion.py -m -d "2015-05-01"
 
 ## Changelog
 
