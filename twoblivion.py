@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 #
 #  Twoblivion
@@ -6,7 +7,7 @@
 #    
 #  This work is licensed under the GNU General Public License
 #
-__version__ = "0.4.1"
+__version__ = "0.4.2"
 
 import optparse
 import os
@@ -23,7 +24,7 @@ YOUR_ACCESS_TOKEN = ""
 YOUR_ACCESS_TOKEN_SECRET = ""
 
 YOUR_USER_ID = ""
-TEST_DATE = "2015 01 01"
+TEST_DATE = "2016 01 01"
 
 Debug = False
 
@@ -87,7 +88,7 @@ def GetItemsToDelete(TwApi, UserId, Date, ItemType):
 			print(u"[-] ERROR: (" + str(e[0][0]['code']) + u") " + e[0][0]['message'].decode('utf-8'))
 			exit(-1)
 	
-	print("[*] Got " + str(len(ItemsToDelete)) + " " + ItemType + " to delete")
+	print("[*] Got " + str(len(ItemsToDelete)) + " " + ItemType + "(s) to delete")
 	
 	return ItemsToDelete
 
