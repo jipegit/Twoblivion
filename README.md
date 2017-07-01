@@ -12,7 +12,7 @@ Clone the repo from Github
 
 ## Dependencies
 
-* pip install python-twitter
+* pip install python-twitter==2.2
 * pip install python-dateutil
 
 python-twitter is not compatible with Python3 yet
@@ -30,7 +30,7 @@ Copy/paste your "Access token" and your "Access token secret" to the YOUR_ACCESS
 
 4. Get your twitter ID from your username. https://www.google.fr/search?q=get+twitter+id+from+username
 
-5. (optional) Set the TEST_DATE variable to whatever you want (or use the option -d/--date). Set the YOUR_USER_ID variable to your user_id. (or use the option -u/--userid)
+5. (optional) Set the YOUR_USER_ID variable to your user_id. (or use the option -u/--userid)
 
 
 ## How to run
@@ -40,6 +40,12 @@ python twoblivion.py -h
 eg. python twoblivion.py -m -d "2015-05-01"
 
 ## Changelog
+
+### 0.4.3
+ * Default date set to now - 30 days
+ 
+### 0.4.2
+ * Shebang and typo
 
 ### 0.4.1
  * FIX: DM sent were not deleted.
@@ -64,7 +70,7 @@ eg. python twoblivion.py -m -d "2015-05-01"
 ## License
 
 Twoblivion
-Copyright (C) 2015 Jean-Philippe Teissier
+Copyright (C) 2015-2017 Jean-Philippe Teissier
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
