@@ -2,24 +2,25 @@
 
 Twoblivion is a free tool to automatically delete your old tweets and direct messages
 
-## Author 
+## Author
 
-Jean-Philippe Teissier - @Jipe_ 
+Jean-Philippe Teissier - @Jipe_
 
 ## How to install
 
 Clone the repo from Github
 
-## Dependencies
+## Installing requirements
 
-* pip install python-twitter==2.2
-* pip install python-dateutil
+* `pip install -r requirements.txt`
 
-python-twitter is not compatible with Python3 yet
+or, if you're using Pipenv:
+
+* `pipenv install`
 
 ## Setup
 
-1. Create an application. See https://dev.twitter.com/ 
+1. Create an application. See https://dev.twitter.com/
 
 2. Go to your application's settings -> Keys and Access Tokens and copy/paste your "Consumer key" and your "Consumer secret" to the YOUR_APP_CONSUMER_KEY and YOUR_APP_CONSUMER_SECRET variables in the source code
 
@@ -41,9 +42,13 @@ eg. python twoblivion.py -m -d "2015-05-01"
 
 ## Changelog
 
+### 0.5.0
+ * Default behavior deletes Tweets *AND* DMs
+ * Some code health fixes
+
 ### 0.4.3
  * Default date set to now - 30 days
- 
+
 ### 0.4.2
  * Shebang and typo
 
