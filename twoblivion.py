@@ -8,7 +8,7 @@
 #  This work is licensed under the GNU General Public License
 #
 """Twoblivion wipes tweets from history."""
-__version__ = "0.5.0"
+__version__ = "0.5.1"
 
 import argparse
 import re
@@ -24,7 +24,7 @@ YOUR_ACCESS_TOKEN = "REPLACEME"
 YOUR_ACCESS_TOKEN_SECRET = "REPLACEME"
 YOUR_USER_ID = "REPLACEME"
 
-DEBUG = True
+DEBUG = False
 
 WHITELIST = [
     re.compile(r'Verifying myself: I am \w+ on http://Keybase.io')
@@ -66,6 +66,9 @@ def fetch_items(twitter_api, userid, item_type, max_id):
 
 def fetch_and_delete(twitter_api, user_id, date, item_type):
     """Get the list of Tweets or Direct Messages to delete"""
+
+    global DEBUG # pylint: disable=global-statement
+
     print('[*] Retrieving the list of {0:s}s to delete '
           '(it might take a while...)'.format(item_type))
 
@@ -83,8 +86,9 @@ def fetch_and_delete(twitter_api, user_id, date, item_type):
                         continue
                 items_to_delete.append(item.id)
                 if DEBUG:
+                    print("%d" % item.id)
                     print("[{0:s}] {1:d} {2:s}".format(
-                        item.created_at, item.id, item.text[:60]))
+                        item.created_at, item.id, item.text[:60].encode('utf-8', errors='ignore')))
 
     print("[*] Got {0:d} {1:s} to delete".format(
         len(items_to_delete), item_type))
