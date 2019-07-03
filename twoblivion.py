@@ -90,7 +90,7 @@ def fetch_and_delete(twitter_api, user_id, date, item_type):
                     print("[{0:s}] {1:d} {2:s}".format(
                         item.created_at, item.id, item.text[:60].encode('utf-8', errors='ignore')))
 
-    print("[*] Got {0:d} {1:s} to delete".format(
+    print("[*] Got {0:d} {1:s}(s) to delete".format(
         len(items_to_delete), item_type))
     delete_items(twitter_api, items_to_delete, item_type)
 
