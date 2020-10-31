@@ -1,5 +1,5 @@
 Twoblivion
-Copyright (C) 2015-2017 Jean-Philippe Teissier
+Copyright (C) 2015-2020 Jean-Philippe Teissier
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

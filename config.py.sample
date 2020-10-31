@@ -1,0 +1,15 @@
+import re
+
+YOUR_APP_CONSUMER_KEY = "CHANGE_ME"
+YOUR_APP_CONSUMER_SECRET = "CHANGE_ME"					# Well… not really a secret…
+
+YOUR_ACCESS_TOKEN = "CHANGE_ME"
+YOUR_ACCESS_TOKEN_SECRET = "CHANGE_ME"
+
+YOUR_USER_ID = "CHANGE_ME"
+
+DEBUG = False
+
+WHITELIST = [
+    re.compile(r'Verifying myself: I am \w+ on http://Keybase.io')
+]
