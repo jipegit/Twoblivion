@@ -22,7 +22,7 @@ or, if you're using Pipenv:
 
 ⚠️ python-twitter does not support Twitter API 1.1 for Direct Messages ⚠️
 
-See. [Issue 603](https://github.com/bear/python-twitter/issues/603)
+See. [Issue 603](https://github.com/bear/python-twitter/issues/603#issuecomment-463030438)
 
 A workaround for Direct Messages can be applied following the steps below.
 Direct Messages older than 30 days WON'T be deleted.
