@@ -45,7 +45,7 @@ def delete_items(twitter_api, items_to_delete, item_type):
             i += 1
         except twitter.TwitterError as error:
             print(f"❌ ERROR: {error.message[0]['message']}")
-    print(f'✅ {item_type}s have been delete. Bye!')
+    print(f'✅ {item_type}s have been deleted. Bye!')
 
 
 def fetch_items(twitter_api, userid, item_type, max_id):
